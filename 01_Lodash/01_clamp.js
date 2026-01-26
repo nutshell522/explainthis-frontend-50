@@ -8,7 +8,8 @@
 此函式應確保輸出的 `number` 始終落在指定的範圍内，包括最小值和最大值本身。你會如何實作這個 `clamp` 呢?
  */
 
-const clamp = (number, lower, upper) => Math.max(lower, Math.min(upper, number));
+// 解題思路 : 取中間值，number與最小取其大，接著與最大取其小。
+const clamp = (number, lower, upper) => Math.min(Math.max(number, lower), upper);
 
 // 在範圍中，返回原值
 console.log(clamp(7, 0, 9)); // => 7
