@@ -4,7 +4,9 @@
 `fromPairs` 最後會返回一個新的物件，每個來自 `pairs` 陣列的鍵值對(key-value pair)，都會是這個新物件的鍵值對(key-value pair)。
  */
 
-function fromPairs(pairs) {}
+function fromPairs(pairs) {
+  return Object.fromEntries(pairs);
+}
 
 const pairs = [
   ['explain', 'this'],
