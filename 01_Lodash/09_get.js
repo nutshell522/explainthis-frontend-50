@@ -8,7 +8,20 @@
 而此函式最後會返回路徑的值；如果該路徑不存在於給定的物件，則返回預設值。透過例子會比較好理解：
  */
 
-function get(object, pathParam, defaultValue) {}
+function get(object, pathParam, defaultValue) {
+  const paths = pathParam
+    .split('.')
+    .flatMap((item) => item.split('[').map((item) => item.replace(']', '')));
+
+  let pathIndex = 0;
+
+  while (object !== undefined && object !== null && pathIndex < paths.length) {
+    object = object[paths[pathIndex]];
+    pathIndex++;
+  }
+
+  return object === undefined ? defaultValue : object;
+}
 
 const object = { a: [{ b: { c: 3 } }] };
 
