@@ -8,7 +8,37 @@
 請實作 `cloneDeep`，使巢狀物件與陣列在拷貝後彼此不共享內層參考。
  */
 
-function cloneDeep(item) {}
+function cloneDeep(item) {
+  const hash = new WeakMap();
+
+  function _clone(targetItem) {
+    // null 為 object ，要處理基本型別及 fn
+    if (targetItem === null || typeof targetItem !== 'object') {
+      return targetItem;
+    }
+
+    // 額外處理的型態
+    if (targetItem instanceof Date) return new Date(targetItem);
+    if (targetItem instanceof RegExp) return new RegExp(targetItem);
+
+    // 防止循環參考
+    if (hash.has(targetItem)) return hash.get(targetItem);
+
+    let cloneTarget = Array.isArray(targetItem) ? [] : {};
+    hash.set(targetItem, cloneTarget);
+
+    // 遞迴拷貝
+    for (const key in targetItem) {
+      if (Object.prototype.hasOwnProperty.call(targetItem, key)) {
+        cloneTarget[key] = _clone(targetItem[key]);
+      }
+    }
+
+    return cloneTarget;
+  }
+
+  return _clone(item);
+}
 
 let objA = {
   a: 1,
